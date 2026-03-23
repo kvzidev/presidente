@@ -27,4 +27,4 @@ pnpm-debug.log*
 .vscode
 
 # generic
-public/candidate.png
+public/old_candidate.png
