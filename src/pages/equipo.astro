@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Team from '../components/sections/Team.astro';
+import type { Locale } from '../i18n/ui';
+
+const lang: Locale = 'es-AR';
+---
+
+<BaseLayout
+  lang={lang}
+  altUrl="/en/team"
+  title="Equipo — Ron a Fondo 2027"
+  description="Conocé a las personas que acompañan a Ron a Fondo en su candidatura presidencial para 2027."
+>
+  <Team lang={lang} />
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  altUrl: string;
+}
+const { lang, altUrl } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__disclaimer">{t('footer.disclaimer')}</p>
+    <div class="footer__right">
+      <p class="footer__copy">
+        <small>&copy; {year} Kevin Zanzi. {t('footer.rights')}</small>
+      </p>
+      <a
+        href={altUrl}
+        id="footer-lang-link"
+        class="footer__lang"
+        lang={lang === 'es-AR' ? 'en' : 'es-AR'}
+        hreflang={lang === 'es-AR' ? 'en' : 'es-AR'}
+        aria-label={t('footer.lang_label')}
+      >
+        {t('footer.lang')}
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function syncLangLink() {
+    const link = document.getElementById('footer-lang-link') as HTMLAnchorElement;
+    if (!link) return;
+    const search = window.location.search;
+    const currentHref = link.getAttribute('href')!;
+    const baseUrl = currentHref.split('?')[0];
+    link.href = baseUrl + search;
+  }
+
+  // Sync on initial load and View Transition navigation
+  syncLangLink();
+  document.addEventListener('astro:page-load', syncLangLink);
+  // React to client-side state changes (e.g. from Proposals.astro)
+  window.addEventListener('url-update', syncLangLink);
+  window.addEventListener('popstate', syncLangLink);
+</script>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-xl);
+    background: var(--surface);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .footer__disclaimer,
+  .footer__copy {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    max-width: none;
+  }
+
+  .footer__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  /* Subtle language link — minimal, unobtrusive */
+  .footer__lang {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 1px;
+    transition: color var(--transition-fast);
+
+    &:hover { color: var(--primary-dark); }
+  }
+</style>

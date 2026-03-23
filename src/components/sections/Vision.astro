@@ -1,0 +1,189 @@
+---
+import { getCollection, render } from 'astro:content';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Load and sort all chapters for this locale
+const entries = await getCollection('vision', e => e.data.lang === lang);
+const sorted  = entries.sort((a, b) => a.data.year - b.data.year);
+const total   = sorted.length;
+
+// Pre-render markdown bodies
+const chapters = await Promise.all(
+  sorted.map(async (entry, i) => {
+    const { Content } = await render(entry);
+    return { entry, i, Content, isLast: i === total - 1 };
+  })
+);
+---
+
+<article class="vision" aria-label={t('vision.title')}>
+  <header class="vision__intro">
+    <div class="container">
+      <p class="vision__overline">{t('vision.lead')}</p>
+      <h1 class="vision__headline">{t('vision.title')}</h1>
+    </div>
+  </header>
+
+  {chapters.map(({ entry, i, Content, isLast }) => (
+    <section
+      class:list={['chapter', isLast && 'chapter--final']}
+      aria-labelledby={`chapter-${entry.data.year}`}
+    >
+      <div class="container chapter__inner">
+        <div class="chapter__year-col" aria-hidden="true">
+          <time class="chapter__year-stamp" datetime={String(entry.data.year)}>
+            {entry.data.year}
+          </time>
+          {!isLast && <div class="chapter__thread"></div>}
+        </div>
+
+        <div class="chapter__body">
+          <p class="chapter__label">{t('vision.chapter')} {i + 1} / {total}</p>
+          <div class="chapter__prose">
+            <Content />
+          </div>
+
+          <div class="chapter__arc" aria-hidden="true">
+            <div
+              class="chapter__arc-fill"
+              style={`width: ${Math.round(((i + 1) / total) * 100)}%`}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+</article>
+
+<style>
+  /* Intro */
+  .vision__intro {
+    padding-block: clamp(5rem, 12vw, 9rem);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vision__overline {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary-mid);
+    max-width: none;
+    margin-bottom: var(--space-md);
+  }
+
+  .vision__headline {
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  /* Chapters — alternating backgrounds */
+  .chapter {
+    padding-block: clamp(4rem, 8vw, 6rem);
+    border-bottom: 1px solid var(--border);
+
+    &:nth-of-type(odd)  { background: var(--bg); }
+    &:nth-of-type(even) { background: var(--surface); }
+
+    /* Final chapter: pastel primary tint instead of harsh black */
+    &--final {
+      background: var(--primary);
+      border-bottom: none;
+
+      .chapter__year-stamp { color: var(--primary-dark); }
+      .chapter__label      { color: oklch(52% 0.09 305); }
+      .chapter__prose      { color: var(--primary-dark); }
+      .chapter__arc        { background: oklch(82% 0.07 305); }
+      .chapter__arc-fill   { background: var(--primary-dark); }
+    }
+  }
+
+  .chapter__inner {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+
+    @media (max-width: 40rem) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Year column */
+  .chapter__year-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    @media (max-width: 40rem) { display: none; }
+  }
+
+  .chapter__year-stamp {
+    font-family: 'Clash Display', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-muted);
+    line-height: 1;
+    display: block;
+  }
+
+  .chapter__thread {
+    width: 1px;
+    min-height: 3rem;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+
+  /* Body */
+  .chapter__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .chapter__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    max-width: none;
+  }
+
+  /* Rendered markdown prose */
+  .chapter__prose {
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 60ch;
+
+    /* Paragraph spacing from markdown */
+    p { max-width: none; color: inherit; margin-bottom: 1em; }
+    p:last-child { margin-bottom: 0; }
+  }
+
+  /* Progress arc */
+  .chapter__arc {
+    height: 2px;
+    background: var(--border);
+    border-radius: var(--radius-full);
+    margin-top: var(--space-lg);
+    overflow: hidden;
+    max-width: 16rem;
+  }
+
+  .chapter__arc-fill {
+    height: 100%;
+    background: var(--primary-mid);
+    border-radius: inherit;
+  }
+</style>

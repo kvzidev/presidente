@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { useTranslations, type Locale } from '../i18n/ui';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Locale;
+  /** The equivalent URL in the other language — passed by each page. */
+  altUrl: string;
+}
+
+const { title, description, lang, altUrl } = Astro.props;
+const t = useTranslations(lang);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/candidate.png" />
+
+    <!-- Font preload -->
+    <link rel="preload" href="/fonts/ClashDisplay-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- JSON-LD: Person -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ron a Fondo",
+      "jobTitle": lang === 'es-AR' ? "Candidato Presidencial 2027" : "Presidential Candidate 2027",
+      "description": description,
+      "url": canonicalURL,
+      "image": new URL('/candidate.png', Astro.site),
+      "nationality": { "@type": "Country", "name": "Argentina" },
+    })} />
+
+    <ClientRouter />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">{t('nav.skip')}</a>
+    <Header lang={lang} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} altUrl={altUrl} />
+  </body>
+</html>

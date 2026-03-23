@@ -1,0 +1,148 @@
+---
+import { useTranslations, type Locale } from '../../i18n/ui';
+import { getTeam } from '../../data/content';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const teamMembers = getTeam(lang);
+---
+
+<section class="team" aria-labelledby="team-heading">
+  <div class="container">
+    <header class="team__header">
+      <h1 id="team-heading">{t('team.title')}</h1>
+      <p class="team__lead">{t('team.lead')}</p>
+    </header>
+
+    <div class="team__grid">
+      {teamMembers.map((member) => (
+        <article class="member-card">
+          <div class="member-card__image-container">
+            {member.name === 'Ron a Fondo' ? (
+              <img src="/candidate.png" alt={member.name} class="member-card__image" loading="lazy" />
+            ) : (
+              <div class="member-card__placeholder">
+                <span class="placeholder__initials">{member.name.split(' ').map(n => n[0]).join('')}</span>
+              </div>
+            )}
+          </div>
+          <div class="member-card__content">
+            <h2 class="member-card__name">{member.name}</h2>
+            <p class="member-card__role">{member.role}</p>
+            <p class="member-card__bio">{member.bio}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .team {
+    padding-block: clamp(4rem, 10vw, 7rem);
+  }
+
+  .team__header {
+    margin-bottom: var(--space-2xl);
+    h1 { margin-bottom: var(--space-md); }
+  }
+
+  .team__lead {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .member-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--transition-fluid), box-shadow var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+  }
+
+  .member-card__image-container {
+    aspect-ratio: 4 / 3;
+    background: var(--surface);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .member-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.2) contrast(1.1);
+    transition: transform var(--transition-base);
+
+    .member-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  .member-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    opacity: 0.8;
+  }
+
+  .placeholder__initials {
+    font-family: 'Clash Display', sans-serif;
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--primary-dark);
+    letter-spacing: 0.05em;
+  }
+
+  .member-card__content {
+    padding: var(--space-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .member-card__name {
+    font-size: var(--text-xl);
+    margin: 0;
+  }
+
+  .member-card__role {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .member-card__bio {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 30rem) {
+    .team__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

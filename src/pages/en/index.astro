@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import type { Locale } from '../../i18n/ui';
+
+const lang: Locale = 'en';
+---
+
+<BaseLayout
+  lang={lang}
+  altUrl="/"
+  title="Ron a Fondo — Presidential Candidate 2027"
+  description="Informational site for Ron a Fondo, Argentine presidential candidate 2027. Engineering applied to public policy."
+>
+  <Hero lang={lang} />
+</BaseLayout>

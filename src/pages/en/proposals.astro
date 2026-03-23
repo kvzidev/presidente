@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProposalsSection from '../../components/sections/Proposals.astro';
+import type { Locale } from '../../i18n/ui';
+
+const lang: Locale = 'en';
+---
+
+<BaseLayout
+  lang={lang}
+  altUrl="/propuestas"
+  title="Proposals — Ron a Fondo 2027"
+  description="Ron a Fondo's proposals for the 2027 Argentine presidential elections. Technology, education, health and state."
+>
+  <ProposalsSection lang={lang} />
+</BaseLayout>

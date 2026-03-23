@@ -1,0 +1,327 @@
+---
+import { useTranslations, type Locale } from '../../i18n/ui';
+import { getAreas } from '../../data/content';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const localizedAreas = getAreas(lang);
+const urlArea = Astro.url.searchParams.get('area')?.toLowerCase();
+const foundArea = urlArea ? localizedAreas.find(a => a.key.toLowerCase() === urlArea) : null;
+const currentArea = foundArea ? foundArea.key : (localizedAreas[0]?.key || '');
+---
+
+<section class="proposals" aria-labelledby="proposals-heading">
+  <div class="container">
+    <header class="proposals__header">
+      <h1 id="proposals-heading">{t('proposals.title')}</h1>
+      <p class="proposals__lead">{t('proposals.lead')}</p>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label={t('proposals.title')}>
+      {localizedAreas.map((area) => (
+        <button
+          class:list={['tab', { 'tab--active': area.key === currentArea }]}
+          id={`tab-${area.key}`}
+          type="button"
+          role="tab"
+          aria-selected={area.key === currentArea ? 'true' : 'false'}
+          aria-controls={`panel-${area.key}`}
+          tabindex={area.key === currentArea ? 0 : -1}
+          data-key={area.key}
+        >
+          <span class="tab__icon" aria-hidden="true">{area.icon}</span>
+          {area.label}
+        </button>
+      ))}
+    </div>
+
+    {localizedAreas.map((area, i) => (
+      <div
+        class="panel"
+        id={`panel-${area.key}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${area.key}`}
+        hidden={area.key !== currentArea}
+        tabindex="0"
+      >
+        <ol class="proposal-list">
+          {area.proposals.map((p, idx) => (
+            <li class="proposal-item">
+              <span class="proposal-item__num" aria-hidden="true">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <div class="proposal-item__body">
+                <span class="proposal-item__text">{p.text}</span>
+                <span class="proposal-item__desc">{p.description}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))}
+
+    <div class="proposals__pdf">
+      <a
+        href="/propuestas.pdf"
+        class="pdf-btn"
+        download
+        aria-label={t('proposals.pdf')}
+        disabled
+      >
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+          <!-- Arrow down -->
+          <rect x="8" y="2" width="2" height="9" rx="1" fill="currentColor"/>
+          <rect x="5" y="9" width="2" height="6" rx="1" fill="currentColor" transform="rotate(-45 4.5 11)"/>
+          <rect x="10" y="8" width="2" height="6" rx="1" fill="currentColor" transform="rotate(45 10.5 11)"/>
+          <!-- Base line -->
+          <rect x="2" y="15" width="14" height="2" rx="1" fill="currentColor"/>
+        </svg>
+        {t('proposals.pdf')}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initTabs() {
+    const tablist = document.querySelector('[role="tablist"]') as HTMLElement;
+    if (!tablist) return;
+    const tabs = Array.from(tablist.querySelectorAll<HTMLElement>('[role="tab"]'));
+
+    function activateTab(tab: HTMLElement, updateUrl = true) {
+      tabs.forEach(t => {
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+        t.classList.remove('tab--active');
+        const panel = document.getElementById(t.getAttribute('aria-controls')!);
+        if (panel) panel.setAttribute('hidden', '');
+      });
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      tab.classList.add('tab--active');
+      const panel = document.getElementById(tab.getAttribute('aria-controls')!);
+      if (panel) panel.removeAttribute('hidden');
+
+      // Scroll tab into view
+      tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('area', tab.getAttribute('data-key') || '');
+        window.history.pushState({}, '', url);
+        window.dispatchEvent(new CustomEvent('url-update'));
+      }
+    }
+
+    function handlePopState() {
+      const url = new URL(window.location.href);
+      const key = url.searchParams.get('area');
+      const target = tabs.find(t => t.getAttribute('data-key') === key) || tabs[0];
+      if (target) activateTab(target, false);
+    }
+
+    // Single listener for popstate, updated each time tabs change or page loads
+    window.removeEventListener('popstate', (window as any)._tabPopStateListener);
+    (window as any)._tabPopStateListener = handlePopState;
+    window.addEventListener('popstate', handlePopState);
+
+    // Initial activation from URL if present
+    const url = new URL(window.location.href);
+    const initialKey = url.searchParams.get('area')?.toLowerCase();
+    if (initialKey) {
+      const target = tabs.find(t => t.getAttribute('data-key')?.toLowerCase() === initialKey);
+      if (target) activateTab(target, false);
+    }
+
+    tabs.forEach((tab) => {
+      if (tab.getAttribute('aria-selected') === 'true') tab.classList.add('tab--active');
+      tab.addEventListener('click', () => {
+        activateTab(tab);
+        tab.focus();
+      });
+      tab.addEventListener('keydown', (e: KeyboardEvent) => {
+        let target: HTMLElement | null = null;
+        if (e.key === 'ArrowRight') target = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowLeft')  target = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (e.key === 'Home')       target = tabs[0];
+        if (e.key === 'End')        target = tabs[tabs.length - 1];
+        if (target) { e.preventDefault(); activateTab(target); }
+      });
+    });
+  }
+
+  initTabs();
+  document.addEventListener('astro:page-load', initTabs);
+</script>
+
+<style>
+  .proposals {
+    padding-block: clamp(4rem, 10vw, 7rem);
+  }
+
+  .proposals__header {
+    margin-bottom: var(--space-2xl);
+    h1 { margin-bottom: var(--space-md); }
+  }
+
+  .proposals__lead {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xl);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -webkit-overflow-scrolling: touch;
+
+    /* Indicator shadows (CSS-only) */
+    background: 
+      /* Shadow covers matched to site background */
+      linear-gradient(to right, var(--bg) 30%, transparent) left center,
+      linear-gradient(to left, var(--bg) 30%, transparent) right center,
+      /* Subtle shadows that only show on overflow */
+      radial-gradient(farthest-side at 0% 50%, oklch(0% 0 0 / 0.15), transparent) left center,
+      radial-gradient(farthest-side at 100% 50%, oklch(0% 0 0 / 0.15), transparent) right center;
+    background-repeat: no-repeat;
+    background-size: 50px 100%, 50px 100%, 15px 100%, 15px 100%;
+    background-attachment: local, local, scroll, scroll;
+    
+    &::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+  }
+
+  .tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-family: 'Satoshi', sans-serif;
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.65rem 1.25rem;
+    min-height: 2.75rem;
+    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+
+    &:hover { color: var(--text); background: var(--surface); }
+
+    &.tab--active {
+      color: var(--primary-dark);
+      border-bottom-color: var(--primary-dark);
+      font-weight: 600;
+    }
+  }
+
+  .tab__icon {
+    font-size: 1.1em;
+    line-height: 1;
+  }
+
+  /* Panel */
+  .panel { animation: fadeSlide 220ms ease; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Proposal list */
+  .proposal-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .proposal-item {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+    padding: var(--space-lg) 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child { border-bottom: none; }
+  }
+
+  .proposal-item__num {
+    font-family: 'Clash Display', sans-serif;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    align-self: start;
+    padding-top: 0.1em;
+  }
+
+  .proposal-item__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 0.1em;
+  }
+
+  .proposal-item__text {
+    font-size: var(--text-lg);
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .proposal-item__desc {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* PDF download */
+  .proposals__pdf {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+  }
+
+  .pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--secondary);
+    color: var(--secondary-dark);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: 0.8rem 1.75rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    min-height: 2.75rem;
+    transition: transform var(--transition-fluid), background var(--transition-fast);
+
+    &:hover {
+      transform: translateY(-2px);
+      background: oklch(86% 0.09 155);
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+</style>
