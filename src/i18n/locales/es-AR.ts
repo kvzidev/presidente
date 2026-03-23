@@ -25,13 +25,13 @@ export default {
 
   /* Index nav cards */
   'cards.proposals.title': 'Propuestas',
-  'cards.proposals.desc':  'Cuatro áreas, objetivos concretos, plazos reales.',
+  'cards.proposals.desc':  'Cinco áreas, objetivos concretos, plazos reales.',
   'cards.vision.title':    'Argentina 2035',
   'cards.vision.desc':     'Un horizonte de ocho años con metas verificables.',
 
   /* Proposals page */
   'proposals.title': 'Propuestas',
-  'proposals.lead':  'Cuatro áreas, objetivos concretos, plazos reales.',
+  'proposals.lead':  'Cinco áreas, objetivos concretos, plazos reales.',
   'proposals.pdf':         'Descargar propuestas completas (en progreso)',
 
   /* Argentina 2035 page */

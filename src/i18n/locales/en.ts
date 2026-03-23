@@ -25,13 +25,13 @@ export default {
 
   /* Index nav cards */
   'cards.proposals.title': 'Proposals',
-  'cards.proposals.desc':  'Four areas, concrete goals, realistic timelines.',
+  'cards.proposals.desc':  'Five areas, concrete goals, realistic timelines.',
   'cards.vision.title':    'Argentina 2035',
   'cards.vision.desc':     'An eight-year horizon with verifiable milestones.',
 
   /* Proposals page */
   'proposals.title': 'Proposals',
-  'proposals.lead':  'Four areas, concrete goals, realistic timelines.',
+  'proposals.lead':  'Five areas, concrete goals, realistic timelines.',
   'proposals.pdf':         'Download full proposals (in progress)',
 
   /* Argentina 2035 page */
