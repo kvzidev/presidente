@@ -40,7 +40,7 @@ export const edu = {
       description: 'Conectividad física, transporte, y servicios básicos para todas las escuelas del país.'
     },
     {
-      text: 'Intercambio federal de talendo',
+      text: 'Intercambio federal de talentos',
       description: 'Sistema de becas para que estudiantes de una provincia realice su etapa de Especialización en otra provincia.'
     },
     {
@@ -77,7 +77,7 @@ export const infra = {
   proposals: [
     {
       text: 'Reconstrucción de la red ferroviaria',
-      description: 'Fomentar la construcción de la read ferroviaria como columna vertebral de la Nación.',
+      description: 'Fomentar la construcción de la red ferroviaria como columna vertebral de la Nación.',
     },
     {
       text: 'Centro de conectividad del país en Río Cuarto',
