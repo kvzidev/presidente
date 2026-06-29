@@ -64,6 +64,7 @@ export default {
   'blog.title': 'Stories',
   'blog.lead': 'Exploring success stories and challenges in the application of methodology.',
   'blog.more': 'View more stories',
+  'blog.back': '← Back to stories',
 
   /* Footer */
   'footer.disclaimer': 'Informational site. Not electoral propaganda. I am not a real candidate.',

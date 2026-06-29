@@ -64,6 +64,7 @@ export default {
   'blog.title': 'Historias',
   'blog.lead': 'Explorando casos de éxito y desafíos en la aplicación de metodología.',
   'blog.more': 'Ver más historias',
+  'blog.back': '← Volver a historias',
 
   /* Footer */
   'footer.disclaimer': 'Sitio informativo. No es propaganda electoral. No soy un candidato real.',
