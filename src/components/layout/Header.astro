@@ -9,7 +9,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
-const visionHref    = lang === 'es-AR' ? '/argentina-2035' : '/en/argentina-2035';
+const blogHref      = lang === 'es-AR' ? '/haciendo-historia' : '/en/making-history';
 const teamHref      = lang === 'es-AR' ? '/equipo' : '/en/team';
 
 const modalStrings = {
@@ -39,7 +39,7 @@ const modalStrings = {
     <nav class="header__nav" aria-label={lang === 'es-AR' ? 'Navegación principal' : 'Main navigation'}>
       <ul role="list">
         <li><a href={proposalsHref} class="nav__link">{t('nav.proposals')}</a></li>
-        <li><a href={visionHref}    class="nav__link">{t('nav.vision')}</a></li>
+        <li><a href={blogHref}      class="nav__link">{t('nav.blog')}</a></li>
         <li><a href={teamHref}      class="nav__link">{t('nav.team')}</a></li>
         <li>
           <ContactModal
@@ -71,7 +71,7 @@ const modalStrings = {
     <nav>
       <ul role="list">
         <li><a href={proposalsHref} class="mobile-menu__link">{t('nav.proposals')}</a></li>
-        <li><a href={visionHref}    class="mobile-menu__link">{t('nav.vision')}</a></li>
+        <li><a href={blogHref}      class="mobile-menu__link">{t('nav.blog')}</a></li>
         <li><a href={teamHref}      class="mobile-menu__link">{t('nav.team')}</a></li>
         <li class="mobile-contact">
           <ContactModal client:load lang={lang} strings={modalStrings} />

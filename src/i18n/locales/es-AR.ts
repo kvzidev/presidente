@@ -2,6 +2,7 @@ export default {
   /* Nav */
   'nav.proposals': 'Propuestas',
   'nav.vision': 'Argentina 2035',
+  'nav.blog': 'Haciendo historia',
   'nav.team': 'Equipo',
   'nav.contact': 'Contacto',
   'nav.lang_switch': 'English',
@@ -21,6 +22,7 @@ export default {
   'hero.subtitle': 'Ingeniería aplicada a la política pública. Sin ideología de manual, con metodología.',
   'hero.cta_proposals': 'Ver propuestas',
   'hero.cta_vision': 'Argentina 2035',
+  'hero.cta_newsletter': 'Argentina, juntos',
   'hero.cta_contact': 'Escribir',
 
   /* Index nav cards */

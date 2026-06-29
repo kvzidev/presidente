@@ -5,8 +5,8 @@ interface Props { lang: Locale; }
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const proposalsHref = lang === 'es-AR' ? '/propuestas'    : '/en/proposals';
-const visionHref    = lang === 'es-AR' ? '/argentina-2035' : '/en/argentina-2035';
+const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
+const newsletterHref = lang === 'es-AR' ? '/newsletter' : '/en/newsletter';
 ---
 
 <section class="hero" aria-labelledby="hero-heading">
@@ -29,8 +29,8 @@ const visionHref    = lang === 'es-AR' ? '/argentina-2035' : '/en/argentina-2035
         <a href={proposalsHref} class="hero__cta hero__cta--primary">
           {t('hero.cta_proposals')}
         </a>
-        <a href={visionHref} class="hero__cta hero__cta--secondary">
-          {t('hero.cta_vision')}
+        <a href={newsletterHref} class="hero__cta hero__cta--secondary">
+          {t('hero.cta_newsletter')}
         </a>
       </nav>
     </div>

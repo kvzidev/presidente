@@ -2,6 +2,7 @@ export default {
   /* Nav */
   'nav.proposals': 'Proposals',
   'nav.vision': 'Argentina 2035',
+  'nav.blog': 'Making history',
   'nav.team': 'Team',
   'nav.contact': 'Contact',
   'nav.lang_switch': 'Español',
@@ -21,6 +22,7 @@ export default {
   'hero.subtitle': 'Engineering applied to public policy. No dogma, just methodology.',
   'hero.cta_proposals': 'See proposals',
   'hero.cta_vision': 'Argentina 2035',
+  'hero.cta_newsletter': 'Argentina, together',
   'hero.cta_contact': 'Get in touch',
 
   /* Index nav cards */
