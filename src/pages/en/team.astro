@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Team from '../../components/sections/Team.astro';
-import type { Locale } from '../../i18n/ui';
+import { useTranslations, type Locale } from '../../i18n/ui';
 
 const lang: Locale = 'en';
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
   altUrl="/equipo"
-  title="The Team — Ron a Fondo 2027"
-  description="Meet the people supporting Ron a Fondo's 2027 presidential candidacy."
+  title={`${t('nav.team')} — ${t('hero.name')} 2027`}
+  description={`Meet the people supporting ${t('hero.name')}'s 2027 presidential candidacy.`}
 >
   <Team lang={lang} />
 </BaseLayout>

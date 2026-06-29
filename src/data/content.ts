@@ -1,4 +1,4 @@
-import type { Locale } from '../i18n/ui';
+import { useTranslations, type Locale } from '../i18n/ui';
 import * as es from './locales/es-AR';
 import * as en from './locales/en';
 import { team as esTeam } from './locales/team.es-AR';
@@ -59,5 +59,16 @@ export const getAreas = (lang: Locale): Area[] => {
 
 /** Retrieves the localized team members. */
 export const getTeam = (lang: Locale): TeamMember[] => {
-  return TEAM_LOCALES[lang] ?? TEAM_LOCALES['es-AR'];
+  const t = useTranslations(lang);
+  const rawTeam = TEAM_LOCALES[lang] ?? TEAM_LOCALES['es-AR'];
+  return rawTeam.map((member, index) => {
+    if (index === 0) {
+      return {
+        ...member,
+        name: t('hero.name'),
+        role: t('hero.role'),
+      };
+    }
+    return member;
+  });
 }

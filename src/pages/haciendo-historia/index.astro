@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Stories from '../../components/sections/Stories.astro';
-import type { Locale } from '../../i18n/ui';
+import { useTranslations, type Locale } from '../../i18n/ui';
 
 const lang: Locale = 'es-AR';
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
   altUrl="/en/making-history"
-  title="Historias — Ron a Fondo 2027"
-  description="Historias, casos de éxito y desafíos en la aplicación de metodología en la gestión pública con Ron a Fondo."
+  title={`${t('blog.title')} — ${t('hero.name')} 2027`}
+  description={`Historias, casos de éxito y desafíos en la aplicación de metodología en la gestión pública con ${t('hero.name')}.`}
 >
   <Stories lang={lang} />
 </BaseLayout>

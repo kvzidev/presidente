@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Stories from '../../../components/sections/Stories.astro';
-import type { Locale } from '../../../i18n/ui';
+import { useTranslations, type Locale } from '../../../i18n/ui';
 
 const lang: Locale = 'en';
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
   altUrl="/haciendo-historia"
-  title="Stories — Ron a Fondo 2027"
-  description="Stories, success cases, and challenges in the application of methodology in public management with Ron a Fondo."
+  title={`${t('blog.title')} — ${t('hero.name')} 2027`}
+  description={`Stories, success cases, and challenges in the application of methodology in public management with ${t('hero.name')}.`}
 >
   <Stories lang={lang} />
 </BaseLayout>

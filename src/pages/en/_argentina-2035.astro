@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Vision from '../../components/sections/Vision.astro';
-import type { Locale } from '../../i18n/ui';
+import { useTranslations, type Locale } from '../../i18n/ui';
 
 const lang: Locale = 'en';
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
   altUrl="/argentina-2035"
-  title="Argentina 2035 — Ron a Fondo"
-  description="Ron a Fondo's vision for Argentina in 2035: a plan with verifiable milestones from 2027 to 2035."
+  title={`${t('nav.vision')} — ${t('hero.name')}`}
+  description={`${t('hero.name')}'s vision for Argentina in 2035: a plan with verifiable milestones from 2027 to 2035.`}
 >
   <Vision lang={lang} />
 </BaseLayout>

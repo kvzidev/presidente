@@ -42,8 +42,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script type="application/ld+json" is:inline set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Ron a Fondo",
-      "jobTitle": lang === 'es-AR' ? "Candidato Presidencial 2027" : "Presidential Candidate 2027",
+      "name": t('hero.name'),
+      "jobTitle": t('hero.role'),
       "description": description,
       "url": canonicalURL,
       "image": new URL('/candidate.png', Astro.site),

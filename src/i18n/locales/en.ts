@@ -12,6 +12,7 @@ export default {
   'nav.skip': 'Skip to main content',
 
   /* Hero */
+  'hero.year': '2027',
   'hero.badge': 'Elections 2027',
   'hero.portrait_alt': 'Ron a Fondo, presidential candidate 2027',
   'hero.name': 'Ron a Fondo',

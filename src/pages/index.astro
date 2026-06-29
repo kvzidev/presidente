@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
-import type { Locale } from '../i18n/ui';
+import { useTranslations, type Locale } from '../i18n/ui';
 
 const lang: Locale = 'es-AR';
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
   lang={lang}
   altUrl="/en/"
-  title="Ron a Fondo — Candidato Presidencial 2027"
-  description="Sitio informativo de Ron a Fondo, candidato presidencial argentino 2027. Ingeniería aplicada a la política pública."
+  title={`${t('hero.name')} — ${t('hero.role')}`}
+  description={`Sitio informativo de ${t('hero.name')}, ${t('hero.role').toLowerCase()}. Ingeniería aplicada a la política pública.`}
 >
   <Hero lang={lang} />
 </BaseLayout>

@@ -19,7 +19,7 @@ const teamMembers = getTeam(lang);
       {teamMembers.map((member) => (
         <article class="member-card">
           <div class="member-card__image-container">
-            {member.name === 'Ron a Fondo' ? (
+            {member.name === t('hero.name') ? (
               <img src="/candidate.png" alt={member.name} class="member-card__image" loading="lazy" />
             ) : (
               <div class="member-card__placeholder">

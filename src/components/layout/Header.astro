@@ -31,9 +31,9 @@ const modalStrings = {
 
 <header class="header" role="banner" id="site-header">
   <div class="container header__inner">
-    <a href={lang === 'es-AR' ? '/' : '/en/'} class="header__logo" aria-label="Ron a Fondo — inicio">
-      <span class="logo__initials" aria-hidden="true">RF</span>
-      <span class="logo__name">Ron a Fondo</span>
+    <a href={lang === 'es-AR' ? '/' : '/en/'} class="header__logo" aria-label={`${t('hero.name')} — ${lang === 'es-AR' ? 'inicio' : 'home'}`}>
+      <span class="logo__initials" aria-hidden="true">{(t('hero.first_name')?.[0] || '') + (t('hero.last_name')?.[0] || '')}</span>
+      <span class="logo__name">{t('hero.name')}</span>
     </a>
 
     <nav class="header__nav" aria-label={lang === 'es-AR' ? 'Navegación principal' : 'Main navigation'}>
