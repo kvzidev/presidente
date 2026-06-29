@@ -1,6 +1,6 @@
-const candidate_first = 'Ron';
-const candidate_last = 'a Fondo';
-const year = '2027';
+import { common } from './_common';
+
+const { candidate_first, candidate_last, year } = common;
 
 export default {
   /* Nav */
