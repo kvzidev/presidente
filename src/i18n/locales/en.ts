@@ -1,3 +1,7 @@
+const candidate_first = 'Ron';
+const candidate_last = 'a Fondo';
+const year = '2027';
+
 export default {
   /* Nav */
   'nav.proposals': 'Proposals',
@@ -12,13 +16,13 @@ export default {
   'nav.skip': 'Skip to main content',
 
   /* Hero */
-  'hero.year': '2027',
-  'hero.badge': 'Elections 2027',
-  'hero.portrait_alt': 'Ron a Fondo, presidential candidate 2027',
-  'hero.name': 'Ron a Fondo',
-  'hero.first_name': 'Ron',
-  'hero.last_name': 'a Fondo',
-  'hero.role': 'Presidential Candidate 2027',
+  'hero.year': year,
+  'hero.badge': `Elections ${year}`,
+  'hero.portrait_alt': `${candidate_first} ${candidate_last}, presidential candidate ${year}`,
+  'hero.name': `${candidate_first} ${candidate_last}`,
+  'hero.first_name': candidate_first,
+  'hero.last_name': candidate_last,
+  'hero.role': `Presidential Candidate ${year}`,
   'hero.slogan': 'A system that works.',
   'hero.subtitle': 'Engineering applied to public policy. No dogma, just methodology.',
   'hero.cta_proposals': 'See proposals',

@@ -10,8 +10,8 @@ const t = useTranslations(lang);
 <BaseLayout
   lang={lang}
   altUrl="/en/team"
-  title={`${t('team.title')} — ${t('hero.name')} 2027`}
-  description={`Conocé a las personas que acompañan a ${t('hero.name')} en su candidatura presidencial para 2027.`}
+  title={`${t('team.title')} — ${t('hero.name')} ${t('hero.year')}`}
+  description={`Conocé a las personas que acompañan a ${t('hero.name')} en su candidatura presidencial para ${t('hero.year')}.`}
 >
   <Team lang={lang} />
 </BaseLayout>

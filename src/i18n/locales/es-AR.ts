@@ -1,3 +1,7 @@
+const candidate_first = 'Ron';
+const candidate_last = 'a Fondo';
+const year = '2027';
+
 export default {
   /* Nav */
   'nav.proposals': 'Propuestas',
@@ -12,13 +16,13 @@ export default {
   'nav.skip': 'Ir al contenido principal',
 
   /* Hero */
-  'hero.year': '2027',
-  'hero.badge': 'Elecciones 2027',
-  'hero.portrait_alt': 'Ron a Fondo, candidato presidencial 2027',
-  'hero.name': 'Ron a Fondo',
-  'hero.first_name': 'Ron',
-  'hero.last_name': 'a Fondo',
-  'hero.role': 'Candidato Presidencial 2027',
+  'hero.year': year,
+  'hero.badge': `Elecciones ${year}`,
+  'hero.portrait_alt': `${candidate_first} ${candidate_last}, candidato presidencial ${year}`,
+  'hero.name': `${candidate_first} ${candidate_last}`,
+  'hero.first_name': candidate_first,
+  'hero.last_name': candidate_last,
+  'hero.role': `Candidato Presidencial ${year}`,
   'hero.slogan': 'Un sistema que funcione.',
   'hero.subtitle': 'Ingeniería aplicada a la política pública. Sin ideología de manual, con metodología.',
   'hero.cta_proposals': 'Ver propuestas',

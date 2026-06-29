@@ -10,8 +10,8 @@ const t = useTranslations(lang);
 <BaseLayout
   lang={lang}
   altUrl="/en/proposals"
-  title={`${t('proposals.title')} — ${t('hero.name')} 2027`}
-  description={`Las propuestas de ${t('hero.name')} para las elecciones presidenciales argentinas 2027. Tecnología, educación, salud y estado.`}
+  title={`${t('proposals.title')} — ${t('hero.name')} ${t('hero.year')}`}
+  description={`Las propuestas de ${t('hero.name')} para las elecciones presidenciales argentinas ${t('hero.year')}. Tecnología, educación, salud y estado.`}
 >
   <Proposals lang={lang} />
 </BaseLayout>
