@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, type Locale } from '../../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Retrieve all stories for this locale
+const entries = await getCollection('stories', (e) => e.data.lang === lang);
+
+// Sort stories by date descending
+const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+// Identify featured story by its slug and separate it
+const featuredSlug = 'metro-ciudad-x';
+const featuredStory = sorted.find((e) => e.id.includes(featuredSlug));
+const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
+---
+
+<section class="stories" aria-labelledby="stories-heading">
+  <div class="container">
+    <header class="stories__header">
+      <h1 id="stories-heading">{t('blog.title')}</h1>
+      <p class="stories__lead">{t('blog.lead')}</p>
+    </header>
+
+    {featuredStory && (
+      <article class="story-card story-card--featured">
+        <div class="story-card__image-container">
+          <img
+            src={featuredStory.data.image}
+            alt={featuredStory.data.title}
+            class="story-card__image"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="story-card__content">
+          <span class="story-card__meta">
+            {featuredStory.data.date} — {featuredStory.data.category}
+          </span>
+          <h2 class="story-card__title">{featuredStory.data.title}</h2>
+          <p class="story-card__desc">{featuredStory.data.description}</p>
+        </div>
+      </article>
+    )}
+
+    {regularStories.length > 0 && (
+      <div class="stories__grid">
+        {regularStories.map((story) => (
+          <article class="story-card">
+            <div class="story-card__image-container">
+              <img
+                src={story.data.image}
+                alt={story.data.title}
+                class="story-card__image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="story-card__content">
+              <span class="story-card__meta">
+                {story.data.date} — {story.data.category}
+              </span>
+              <h2 class="story-card__title">{story.data.title}</h2>
+              <p class="story-card__desc">{story.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <div class="stories__more-container">
+      <a href="#" class="stories__more-link">{t('blog.more')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stories {
+    padding-block: clamp(4rem, 10vw, 7rem);
+  }
+
+  .stories__header {
+    margin-bottom: var(--space-2xl);
+    h1 { margin-bottom: var(--space-md); }
+  }
+
+  .stories__lead {
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+
+  /* Story Card Base */
+  .story-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    transition: transform var(--transition-fluid), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    padding: var(--space-md);
+    gap: var(--space-md);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+  }
+
+  .story-card__image-container {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
+    height: 100%;
+    width: 100%;
+  }
+
+  .story-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+
+    .story-card:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  .story-card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .story-card__meta {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .story-card__title {
+    font-size: var(--text-lg);
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: var(--space-sm);
+  }
+
+  .story-card__desc {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    /* 3 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Featured Story Card (Large) */
+  .story-card--featured {
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-xl);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+
+    .story-card__title {
+      font-size: var(--text-3xl);
+    }
+
+    .story-card__image-container {
+      aspect-ratio: 16 / 9;
+    }
+
+    @media (max-width: 52rem) {
+      grid-template-columns: 1fr;
+      padding: var(--space-md);
+      gap: var(--space-md);
+
+      .story-card__title {
+        font-size: var(--text-2xl);
+      }
+    }
+  }
+
+  /* Regular Stories Grid */
+  .stories__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+
+    .story-card {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    @media (max-width: 64rem) {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 40rem) {
+      .story-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  /* More Stories Link */
+  .stories__more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+  }
+
+  .stories__more-link {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 2px;
+
+    &:hover {
+      color: var(--primary-hover);
+      border-bottom-color: var(--primary-hover);
+    }
+  }
+</style>

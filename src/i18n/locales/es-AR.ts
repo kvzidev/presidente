@@ -60,6 +60,11 @@ export default {
   'contact.required': 'Este campo es obligatorio.',
   'contact.email_invalid': 'Ingresá un correo electrónico válido.',
 
+  /* Blog page (Haciendo historia) */
+  'blog.title': 'Historias',
+  'blog.lead': 'Explorando casos de éxito y desafíos en la aplicación de metodología.',
+  'blog.more': 'Ver más historias',
+
   /* Footer */
   'footer.disclaimer': 'Sitio informativo. No es propaganda electoral. No soy un candidato real.',
   'footer.rights': 'Todos los derechos reservados.',

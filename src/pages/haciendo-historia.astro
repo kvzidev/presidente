@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Stories from '../components/sections/Stories.astro';
+import type { Locale } from '../i18n/ui';
+
+const lang: Locale = 'es-AR';
+---
+
+<BaseLayout
+  lang={lang}
+  altUrl="/en/making-history"
+  title="Historias — Ron a Fondo 2027"
+  description="Historias, casos de éxito y desafíos en la aplicación de metodología en la gestión pública con Ron a Fondo."
+>
+  <Stories lang={lang} />
+</BaseLayout>

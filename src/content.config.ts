@@ -10,4 +10,16 @@ const vision = defineCollection({
   }),
 });
 
-export const collections = { vision };
+const stories = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/stories' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.string(),
+    category: z.string(),
+    lang: z.enum(['es-AR', 'en']),
+    image: z.string(),
+  }),
+});
+
+export const collections = { vision, stories };

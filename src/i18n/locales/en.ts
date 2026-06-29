@@ -60,6 +60,11 @@ export default {
   'contact.required': 'This field is required.',
   'contact.email_invalid': 'Please enter a valid email address.',
 
+  /* Blog page (Haciendo historia) */
+  'blog.title': 'Stories',
+  'blog.lead': 'Exploring success stories and challenges in the application of methodology.',
+  'blog.more': 'View more stories',
+
   /* Footer */
   'footer.disclaimer': 'Informational site. Not electoral propaganda. I am not a real candidate.',
   'footer.rights': 'All rights reserved.',
