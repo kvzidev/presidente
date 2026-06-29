@@ -36,6 +36,7 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
               type="email"
               id="newsletter-email"
               class="hero__newsletter-input"
+              placeholder={lang === 'es-AR' ? 'ejemplo@correo.com' : 'you@example.com'}
               aria-describedby="hero-newsletter-error"
               required
             />
@@ -299,10 +300,21 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
     transition: opacity var(--transition-fast);
     z-index: 1;
 
+    &::placeholder {
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
     .hero__newsletter-field--active & {
       opacity: 1;
       pointer-events: auto;
       padding-top: 0.85rem;
+
+      &::placeholder {
+        opacity: 1;
+        transition-delay: 250ms; /* delays placeholder to fade in with the submit icon */
+      }
     }
   }
 
