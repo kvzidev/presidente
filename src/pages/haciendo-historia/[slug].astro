@@ -1,0 +1,137 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('stories', (e) => e.data.lang === 'es-AR');
+  return entries.map((entry) => {
+    const slug = entry.id.split('/').pop()?.replace('.md', '') || entry.id;
+    return {
+      params: { slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const { slug } = Astro.params;
+const { Content } = await render(entry);
+const t = useTranslations('es-AR');
+
+const altUrl = `/en/making-history/${slug}`;
+const backHref = '/haciendo-historia';
+---
+
+<BaseLayout
+  lang="es-AR"
+  altUrl={altUrl}
+  title={`${entry.data.title} — Ron a Fondo 2027`}
+  description={entry.data.description}
+>
+  <article class="story-post">
+    <div class="container container--narrow">
+      <nav class="story-post__nav" aria-label="Navegación de retorno">
+        <a href={backHref} class="back-link">{t('blog.back')}</a>
+      </nav>
+
+      <header class="story-post__header">
+        <span class="story-post__meta">{entry.data.date} — {entry.data.category}</span>
+        <h1 class="story-post__title">{entry.data.title}</h1>
+      </header>
+
+      <div class="story-post__image-wrap">
+        <img
+          src={entry.data.image}
+          alt={entry.data.title}
+          class="story-post__image"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <div class="story-post__body">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .story-post {
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+
+  .container--narrow {
+    max-width: 50rem;
+  }
+
+  .story-post__nav {
+    margin-bottom: var(--space-xl);
+  }
+
+  .back-link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 2px;
+
+    &:hover {
+      color: var(--primary-hover);
+      border-bottom-color: var(--primary-hover);
+    }
+  }
+
+  .story-post__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .story-post__meta {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .story-post__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--text);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .story-post__image-wrap {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--surface);
+    margin-bottom: var(--space-xl);
+    border: 1px solid var(--border);
+  }
+
+  .story-post__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .story-post__body {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--text);
+    line-height: 1.8;
+    
+    p {
+      margin-bottom: 1.5em;
+      max-width: none;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+</style>

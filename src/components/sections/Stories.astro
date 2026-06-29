@@ -18,6 +18,14 @@ const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const featuredSlug = 'metro-ciudad-x';
 const featuredStory = sorted.find((e) => e.id.includes(featuredSlug));
 const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
+
+const getSlug = (entry: any) => {
+  return entry.id.split('/').pop()?.replace('.md', '') || entry.id;
+};
+const getUrl = (entry: any) => {
+  const slug = getSlug(entry);
+  return lang === 'es-AR' ? `/haciendo-historia/${slug}` : `/en/making-history/${slug}`;
+};
 ---
 
 <section class="stories" aria-labelledby="stories-heading">
@@ -42,7 +50,9 @@ const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
           <span class="story-card__meta">
             {featuredStory.data.date} — {featuredStory.data.category}
           </span>
-          <h2 class="story-card__title">{featuredStory.data.title}</h2>
+          <h2 class="story-card__title">
+            <a href={getUrl(featuredStory)} class="story-card__link">{featuredStory.data.title}</a>
+          </h2>
           <p class="story-card__desc">{featuredStory.data.description}</p>
         </div>
       </article>
@@ -65,7 +75,9 @@ const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
               <span class="story-card__meta">
                 {story.data.date} — {story.data.category}
               </span>
-              <h2 class="story-card__title">{story.data.title}</h2>
+              <h2 class="story-card__title">
+                <a href={getUrl(story)} class="story-card__link">{story.data.title}</a>
+              </h2>
               <p class="story-card__desc">{story.data.description}</p>
             </div>
           </article>
@@ -97,6 +109,7 @@ const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
 
   /* Story Card Base */
   .story-card {
+    position: relative;
     background: var(--surface-raised);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -110,6 +123,19 @@ const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
       border-color: var(--primary);
+    }
+  }
+
+  .story-card__link {
+    color: inherit;
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: 1;
     }
   }
 
