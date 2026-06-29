@@ -12,7 +12,7 @@ export default {
   'nav.skip': 'Ir al contenido principal',
 
   /* Hero */
-  'hero.badge': 'Elecciones 2027 (no soy un candidato real)',
+  'hero.badge': 'Elecciones 2027',
   'hero.portrait_alt': 'Ron a Fondo, candidato presidencial 2027',
   'hero.name': 'Ron a Fondo',
   'hero.first_name': 'Ron',
