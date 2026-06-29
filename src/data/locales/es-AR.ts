@@ -50,24 +50,28 @@ export const edu = {
   ],
 };
 
-export const state = {
-  label: 'Estado',
+export const health = {
+  label: 'Salud',
   proposals: [
     {
-      text: 'El Poder Económico',
-      description: 'Creación de un nuevo poder independiente, encargado de regular y supervisar la economía. No manipulable por el poder ejecutivo ni legislativo.',
+      text: 'Mejoras en el sistema de salud.',
+      description: 'Control de gestión, auditorías, y mejora de la infraestructura hospitalaria.',
     },
     {
-      text: 'Derogación de normativa obsoleta',
-      description: 'Revisión y derogación de toda norma que obstaculice la actividad económica o social.',
+      text: 'Descentralización quirúrgica',
+      description: 'Fortalecimiento de quirófanos regionales para evitar traslados innecesarios a las grandes ciudades.'
     },
     {
-      text: 'Competencia de Provincias',
-      description: 'Fortalecer la competencia y especialización de las provincias.',
+      text: 'Prevención comunitaria',
+      description: 'Promoción del uso voluntario de barbijo en espacios públicos y transporte ante síntomas respiratorios o tos persistente.'
     },
     {
-      text: 'División de la Provincia de Buenos Aires',
-      description: 'Separar la Provincia en 3 partes, el Delta, la Atlántica y la Pampa Este.',
+      text: 'Soberanía de insumos críticos',
+      description: 'Fomento de producción nacional de medicamentos genéricos y material descartable.'
+    },
+    {
+      text: 'Modernización de la cadena de frío',
+      description: 'Inversión en infraestructura logística para la distribución de vacunas y biológicos, permitiendo que lleguen a cada rincón del país.'
     }
   ],
 };
@@ -94,28 +98,28 @@ export const infra = {
   ],
 }
 
-export const health = {
-  label: 'Salud',
+export const state = {
+  label: 'Estado',
   proposals: [
     {
-      text: 'Mejoras en el sistema de salud.',
-      description: 'Control de gestión, auditorías, y mejora de la infraestructura hospitalaria.',
+      text: 'El Poder Económico',
+      description: 'Creación de un nuevo poder independiente, encargado de regular y supervisar la economía. No manipulable por el poder ejecutivo ni legislativo.',
     },
     {
-      text: 'Descentralización quirúrgica',
-      description: 'Fortalecimiento de quirófanos regionales para evitar traslados innecesarios a las grandes ciudades.'
+      text: 'Derogación de normativa obsoleta',
+      description: 'Revisión y derogación de toda norma que obstaculice la actividad económica o social.',
     },
     {
-      text: 'Prevención comunitaria',
-      description: 'Promoción del uso voluntario de barbijo en espacios públicos y transporte ante síntomas respiratorios o tos persistente.'
+      text: 'Competencia de Provincias',
+      description: 'Fortalecer la competencia y especialización de las provincias.',
     },
     {
-      text: 'Soberanía de insumos críticos',
-      description: 'Fomento de producción nacional de medicamentos genéricos y material descartable.'
+      text: 'División de la Provincia de Buenos Aires',
+      description: 'Separar la Provincia en 3 partes, el Delta, la Atlántica y la Pampa Este.',
     },
     {
-      text: 'Modernización de la cadena de frío',
-      description: 'Inversión en infraestructura logística para la distribución de vacunas y biológicos, permitiendo que lleguen a cada rincón del país.'
+      text: 'Padrinazgo y Preservación de la Tradición Cultural',
+      description: 'Establecer el padrinazgo tradicional como un honor simbólico coordinado por delegados de la Presidencia, sin generar eerogaciones ni beneficios económicos estatales.',
     }
   ],
 };
