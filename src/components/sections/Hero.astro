@@ -6,7 +6,6 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
-const newsletterHref = lang === 'es-AR' ? '/newsletter' : '/en/newsletter';
 ---
 
 <section class="hero" aria-labelledby="hero-heading">
@@ -25,14 +24,33 @@ const newsletterHref = lang === 'es-AR' ? '/newsletter' : '/en/newsletter';
       <p class="hero__slogan">{t('hero.slogan')}</p>
       <p class="hero__subtitle">{t('hero.subtitle')}</p>
 
-      <nav class="hero__actions" aria-label={lang === 'es-AR' ? 'Acciones principales' : 'Main actions'}>
+      <div class="hero__actions">
         <a href={proposalsHref} class="hero__cta hero__cta--primary">
           {t('hero.cta_proposals')}
         </a>
-        <a href={newsletterHref} class="hero__cta hero__cta--secondary">
-          {t('hero.cta_newsletter')}
-        </a>
-      </nav>
+
+        <form class="hero__newsletter" id="hero-newsletter" novalidate>
+          <div class="hero__newsletter-field">
+            <div class="hero__newsletter-border" aria-hidden="true"></div>
+            <input
+              type="email"
+              id="newsletter-email"
+              class="hero__newsletter-input"
+              aria-describedby="hero-newsletter-error"
+              required
+            />
+            <label for="newsletter-email" class="hero__newsletter-label">
+              {t('hero.cta_newsletter')}
+            </label>
+            <button type="submit" class="hero__newsletter-submit" aria-label={t('contact.submit')}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <span class="hero__newsletter-msg" id="hero-newsletter-error" aria-live="polite" hidden></span>
+        </form>
+      </div>
     </div>
 
     <div class="hero__portrait-wrap">
@@ -132,10 +150,14 @@ const newsletterHref = lang === 'es-AR' ? '/newsletter' : '/en/newsletter';
 
   .hero__actions {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: var(--space-md);
+    align-items: center;
 
-    @media (max-width: 52rem) { justify-content: center; }
+    @media (max-width: 52rem) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 
   .hero__cta {
@@ -190,4 +212,224 @@ const newsletterHref = lang === 'es-AR' ? '/newsletter' : '/en/newsletter';
       transparent 100%
     );
   }
+
+  .hero__newsletter {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero__newsletter-field {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: var(--primary-dark);
+    border-radius: var(--radius-full);
+    min-height: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    cursor: pointer;
+    width: 12rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base), width var(--transition-base), padding var(--transition-base);
+    box-sizing: border-box;
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+  }
+
+  .hero__newsletter-border {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1.5px solid oklch(75% 0.05 155);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero__newsletter-field--active .hero__newsletter-border {
+    opacity: 0.6;
+  }
+
+  .hero__newsletter-field--active {
+    background: var(--surface-raised);
+    width: 18rem;
+    padding-left: 1.25rem;
+    padding-right: 3.25rem;
+    cursor: default;
+  }
+
+  .hero__newsletter-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: inherit;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--primary-dark);
+    transition: transform var(--transition-base), font-size var(--transition-base), top var(--transition-base), left var(--transition-base), color var(--transition-fast);
+    pointer-events: none;
+    white-space: nowrap;
+    transform-origin: top left;
+    z-index: 1;
+  }
+
+  .hero__newsletter-field--active .hero__newsletter-label {
+    top: 0.3rem;
+    left: 1.25rem;
+    transform: translate(0, 0) scale(0.72);
+  }
+
+  .hero__newsletter-input {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-size: var(--text-base);
+    color: var(--text);
+    width: 100%;
+    outline: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+    z-index: 1;
+
+    .hero__newsletter-field--active & {
+      opacity: 1;
+      pointer-events: auto;
+      padding-top: 0.85rem;
+    }
+  }
+
+  .hero__newsletter-submit {
+    position: absolute;
+    right: 0.35rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-dark);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius-full);
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast) 0ms, transform var(--transition-base);
+    z-index: 2;
+
+    .hero__newsletter-field--active & {
+      opacity: 1;
+      pointer-events: auto;
+      transition-delay: 250ms; /* wait for animation to complete before fade in */
+    }
+
+    &:hover {
+      transform: translateY(-50%) scale(1.05);
+    }
+  }
+
+  .hero__newsletter-msg {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: var(--space-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    white-space: nowrap;
+
+    &--success {
+      color: var(--secondary-dark);
+    }
+
+    &--error {
+      color: var(--error);
+    }
+  }
 </style>
+
+<script>
+  function initNewsletter() {
+    const form = document.getElementById('hero-newsletter') as HTMLFormElement;
+    if (!form) return;
+
+    const field = form.querySelector('.hero__newsletter-field') as HTMLDivElement;
+    const input = form.querySelector('.hero__newsletter-input') as HTMLInputElement;
+    const button = form.querySelector('.hero__newsletter-submit') as HTMLButtonElement;
+    const msg = form.querySelector('.hero__newsletter-msg') as HTMLSpanElement;
+
+    if (!field || !input || !button) return;
+
+    // Focus input when clicking anywhere on the field container
+    field.addEventListener('click', (e) => {
+      if (e.target !== button && !button.contains(e.target as Node)) {
+        field.classList.add('hero__newsletter-field--active');
+        input.focus();
+      }
+    });
+
+    // Handle blur: only return to idle state if input is empty
+    input.addEventListener('blur', () => {
+      if (!input.value.trim()) {
+        field.classList.remove('hero__newsletter-field--active');
+      }
+    });
+
+    // Handle input focus
+    input.addEventListener('focus', () => {
+      field.classList.add('hero__newsletter-field--active');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!input.value.trim()) return;
+
+      const lang = document.documentElement.lang || 'es-AR';
+
+      // Simple email validation regex
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+        if (msg) {
+          msg.textContent = lang === 'es-AR'
+            ? 'Ingresá un correo válido.'
+            : 'Enter a valid email.';
+          msg.className = 'hero__newsletter-msg hero__newsletter-msg--error';
+          msg.removeAttribute('hidden');
+        }
+        return;
+      }
+
+      button.disabled = true;
+      button.style.opacity = '0.5';
+
+      // Simulate network request
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      button.disabled = false;
+      button.style.opacity = '';
+
+      if (msg) {
+        msg.textContent = lang === 'es-AR'
+          ? '¡Te suscribiste con éxito!'
+          : 'Successfully subscribed!';
+        msg.className = 'hero__newsletter-msg hero__newsletter-msg--success';
+        msg.removeAttribute('hidden');
+      }
+
+      input.value = '';
+      field.classList.remove('hero__newsletter-field--active');
+
+      setTimeout(() => {
+        if (msg) msg.setAttribute('hidden', '');
+      }, 5000);
+    });
+  }
+
+  initNewsletter();
+  document.addEventListener('astro:page-load', initNewsletter);
+</script>
