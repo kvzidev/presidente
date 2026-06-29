@@ -1,6 +1,6 @@
 export const team = [
   {
-    name: 'Ron a Fondo',
+    name: '',
     role: 'Presidential Candidate',
     bio: 'Engineer with a systemic vision, focused on modernizing the country\'s structure through methodology and efficiency.',
   },
