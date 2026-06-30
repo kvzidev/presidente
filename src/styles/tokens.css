@@ -30,14 +30,15 @@
   --primary-mid:   oklch(70% 0.10 155);   /* for decorative use */
   --primary-dark:  oklch(40% 0.11 155);   /* text on primary bg, interactive */
   /*--primary-hover: oklch(83% 0.08 155);   /* deeper on hover */
-  --primary-hover: oklch(60% 0.08 155);   /* deeper on hover */
+  --primary-hover: oklch(54% 0.14 154);   /* deeper on hover */
 
   /* Secondary as Pastel Lilac */
 
   --secondary:     oklch(88% 0.06 305);
   --secondary-mid: oklch(70% 0.10 305);   /* for decorative use */
   --secondary-dark: oklch(48% 0.12 305);   /* text on secondary bg, interactive */
-  --secondary-hover: oklch(83% 0.08 305);   /* deeper on hover */
+  /*--secondary-hover: oklch(83% 0.08 305);   /* deeper on hover */
+  --secondary-hover: oklch(60% 0.18 300);   /* deeper on hover */
 
   /* END TESTING */
 
