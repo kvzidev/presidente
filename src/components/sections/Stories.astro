@@ -16,8 +16,8 @@ const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
 // Identify featured story by its slug and separate it
 const featuredSlug = 'reforma-educativa';
-const featuredStory = sorted.find((e) => e.id.includes(featuredSlug));
-const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
+const featuredStory = sorted.find((e) => e.id.includes(featuredSlug) && e.data.is_active);
+const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug) && e.data.is_active);
 
 const getSlug = (entry: any) => {
   return entry.id.split('/').pop()?.replace('.md', '') || entry.id;

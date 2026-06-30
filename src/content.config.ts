@@ -19,6 +19,7 @@ const stories = defineCollection({
     category: z.string(),
     lang: z.enum(['es-AR', 'en']),
     image: z.string(),
+    is_active: z.boolean().optional(),
   }),
 });
 
