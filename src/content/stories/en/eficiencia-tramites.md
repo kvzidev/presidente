@@ -5,6 +5,7 @@ date: "2027-11-20"
 category: "State"
 lang: "en"
 image: "/images/eficiencia-tramites.png"
+is_active: false
 ---
 
 State bureaucracy is often the primary barrier in the relationship between citizens and public administration. The comprehensive reform of administrative procedures focused on a simple principle: the State cannot ask a person for data that the State itself already possesses. Through the interoperable digitization of civil, tax, and property registries, over two hundred national procedures were simplified.

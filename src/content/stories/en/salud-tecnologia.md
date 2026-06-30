@@ -5,6 +5,7 @@ date: "2027-11-20"
 category: "Health"
 lang: "en"
 image: "/images/salud-tecnologia.png"
+is_active: false
 ---
 
 The distribution of vaccines and biologicals in a large geographical territory like Argentina has historically been a critical logistical challenge. The new health sovereignty program applied smart cold chain methodologies and decentralized logistical infrastructure to ensure that no medicine loses effectiveness before reaching the patient.

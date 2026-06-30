@@ -5,6 +5,7 @@ date: "2027-12-10"
 category: "Education"
 lang: "en"
 image: "/images/reforma-educativa.png"
+is_active: true
 ---
 
 The first year of the educational reform under the new framework has shown results that challenge traditional teaching paradigms. The transition from the classic primary and secondary structure to three stages (Essential, Social, and Specialization) began as a pilot program in fifty schools across the nation.

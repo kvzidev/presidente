@@ -5,6 +5,7 @@ date: "2027-11-20"
 category: "Salud"
 lang: "es-AR"
 image: "/images/salud-tecnologia.png"
+is_active: false
 ---
 
 La distribución de vacunas y biológicos en un territorio de gran extensión geográfica como la Argentina ha sido históricamente un desafío logístico crítico. El nuevo programa de soberanía sanitaria aplicó metodologías de cadena de frío inteligente e infraestructura logística descentralizada para asegurar que ningún medicamento pierda efectividad antes de llegar al paciente.

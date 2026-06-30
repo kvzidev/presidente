@@ -5,6 +5,7 @@ date: "2028-01-05"
 category: "Infraestructura"
 lang: "es-AR"
 image: "/images/metro-ciudad-x.png"
+is_active: false
 ---
 
 La implementación del nuevo sistema de transporte subterráneo en Ciudad X representa el ejemplo más concreto de metodología aplicada a la infraestructura pública. A diferencia de las extensiones de líneas tradicionales, este proyecto se diseñó utilizando simulación de flujos basada en agentes y optimización logística en tiempo real.

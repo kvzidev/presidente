@@ -15,7 +15,7 @@ const entries = await getCollection('stories', (e) => e.data.lang === lang);
 const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
 // Identify featured story by its slug and separate it
-const featuredSlug = 'metro-ciudad-x';
+const featuredSlug = 'reforma-educativa';
 const featuredStory = sorted.find((e) => e.id.includes(featuredSlug));
 const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug));
 

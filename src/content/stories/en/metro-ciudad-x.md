@@ -5,6 +5,7 @@ date: "2028-01-05"
 category: "Infrastructure"
 lang: "en"
 image: "/images/metro-ciudad-x.png"
+is_active: false
 ---
 
 The implementation of the new subway system in City X represents the most concrete example of methodology applied to public infrastructure. Unlike traditional line extensions, this project was designed using agent-based flow simulation and real-time logistics optimization.

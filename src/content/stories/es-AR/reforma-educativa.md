@@ -5,6 +5,7 @@ date: "2027-12-10"
 category: "Educación"
 lang: "es-AR"
 image: "/images/reforma-educativa.png"
+is_active: true
 ---
 
 El primer año de la reforma educativa bajo el nuevo esquema ha mostrado resultados que desafían los paradigmas de la enseñanza tradicional. La transición del sistema clásico estructurado en primaria y secundaria hacia las tres etapas (Esencial, Social y de Especialización) se inició como prueba piloto en cincuenta escuelas del país.

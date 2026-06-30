@@ -5,6 +5,7 @@ date: "2027-11-20"
 category: "Estado"
 lang: "es-AR"
 image: "/images/eficiencia-tramites.png"
+is_active: false
 ---
 
 La burocracia estatal suele ser la principal barrera en la relación entre el ciudadano y la gestión pública. La reforma integral de trámites administrativos se enfocó en un principio simple: el Estado no puede pedirle a una persona un dato que el propio Estado ya posee. A través de la digitalización interoperable de los registros civiles, impositivos y de propiedad, se simplificaron más de doscientos trámites nacionales.
