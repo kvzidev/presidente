@@ -173,8 +173,12 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
     text-decoration: none;
     min-height: 2.75rem;
     transition: transform var(--transition-fluid), box-shadow var(--transition-base);
+    color: var(--primary-dark);
 
-    &:hover { transform: translateY(-2px) scale(1.02); }
+    &:hover {
+      transform: translateY(-2px) scale(1.02);
+      color: var(--secondary-dark)
+    }
 
     &--primary {
       background: var(--primary-dark);
@@ -283,6 +287,7 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
     top: 0.3rem;
     left: 1.25rem;
     transform: translate(0, 0) scale(0.72);
+    color: var(--secondary-dark);
   }
 
   .hero__newsletter-input {
