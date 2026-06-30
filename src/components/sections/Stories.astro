@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { useTranslations, type Locale } from '../../i18n/ui';
+import { featuredStorySlug } from '../../data/blog/blog';
 
 interface Props {
   lang: Locale;
@@ -14,10 +15,8 @@ const entries = await getCollection('stories', (e) => e.data.lang === lang);
 // Sort stories by date descending
 const sorted = entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
 
-// Identify featured story by its slug and separate it
-const featuredSlug = 'reforma-educativa';
-const featuredStory = sorted.find((e) => e.id.includes(featuredSlug) && e.data.is_active);
-const regularStories = sorted.filter((e) => !e.id.includes(featuredSlug) && e.data.is_active);
+const featuredStory = sorted.find((e) => e.id.includes(featuredStorySlug) && e.data.is_active);
+const regularStories = sorted.filter((e) => !e.id.includes(featuredStorySlug) && e.data.is_active);
 
 const getSlug = (entry: any) => {
   return entry.id.split('/').pop()?.replace('.md', '') || entry.id;
