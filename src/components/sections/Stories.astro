@@ -26,9 +26,21 @@ const getUrl = (entry: any) => {
   const slug = getSlug(entry);
   return lang === 'es-AR' ? `/haciendo-historia/${slug}` : `/en/making-history/${slug}`;
 };
+
+// Pagination: show first 6, store the rest in data-attribute
+const initialStories = regularStories.slice(0, 6);
+const remainingStories = regularStories.slice(6);
+const remainingStoriesData = remainingStories.map((story) => ({
+  title: story.data.title,
+  description: story.data.description,
+  date: story.data.date,
+  category: story.data.category,
+  image: story.data.image,
+  url: getUrl(story),
+}));
 ---
 
-<section class="stories" aria-labelledby="stories-heading">
+<section class="stories" aria-labelledby="stories-heading" data-remaining-stories={JSON.stringify(remainingStoriesData)}>
   <div class="container">
     <header class="stories__header">
       <h1 id="stories-heading">{t('blog.title')}</h1>
@@ -58,9 +70,9 @@ const getUrl = (entry: any) => {
       </article>
     )}
 
-    {regularStories.length > 0 && (
+    {initialStories.length > 0 && (
       <div class="stories__grid">
-        {regularStories.map((story) => (
+        {initialStories.map((story) => (
           <article class="story-card">
             <div class="story-card__image-container">
               <img
@@ -85,11 +97,34 @@ const getUrl = (entry: any) => {
       </div>
     )}
 
-    <div class="stories__more-container">
-      <a href="#" class="stories__more-link">{t('blog.more')}</a>
-    </div>
+    {remainingStories.length > 0 && (
+      <div class="stories__more-container">
+        <a href="#" class="stories__more-link">{t('blog.more')}</a>
+      </div>
+    )}
   </div>
 </section>
+
+<template id="story-card-template">
+  <article class="story-card">
+    <div class="story-card__image-container">
+      <img
+        src={}
+        alt={}
+        class="story-card__image"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="story-card__content">
+      <span class="story-card__meta"></span>
+      <h2 class="story-card__title">
+        <a href={} class="story-card__link"></a>
+      </h2>
+      <p class="story-card__desc"></p>
+    </div>
+  </article>
+</template>
 
 <style>
   .stories {
@@ -266,3 +301,53 @@ const getUrl = (entry: any) => {
     }
   }
 </style>
+
+<script>
+  function setupPagination() {
+    const storiesSection = document.querySelector('.stories') as HTMLElement;
+    if (!storiesSection) return;
+
+    const rawData = storiesSection.dataset.remainingStories;
+    if (!rawData) return;
+
+    let remaining = JSON.parse(rawData);
+    const grid = storiesSection.querySelector('.stories__grid');
+    const loadMoreBtn = storiesSection.querySelector('.stories__more-link') as HTMLAnchorElement;
+    const container = storiesSection.querySelector('.stories__more-container') as HTMLElement;
+
+    if (!grid || !loadMoreBtn || !container) return;
+
+    loadMoreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // Grab the next 6 stories
+      const nextBatch = remaining.slice(0, 6);
+      remaining = remaining.slice(6);
+
+      nextBatch.forEach((story: any) => {
+        const template = document.getElementById('story-card-template') as HTMLTemplateElement;
+        const card = template.content.cloneNode(true) as HTMLArticleElement;
+
+        card.className = 'story-card';
+        card.querySelector('.story-card__image-container img')!.src = story.image;
+        card.querySelector('.story-card__image-container img')!.alt = story.title;
+        card.querySelector('.story-card__meta')!.textContent = `${story.date} — ${story.category}`;
+        card.querySelector('.story-card__title a')!.textContent = story.title;
+        card.querySelector('.story-card__title a')!.href = story.url;
+        card.querySelector('.story-card__desc')!.textContent = story.description;
+        grid.appendChild(card);
+      });
+
+      // Update remaining data
+      storiesSection.dataset.remainingStories = JSON.stringify(remaining);
+
+      // Hide the load more button when all are loaded
+      if (remaining.length === 0) {
+        container.style.display = 'none';
+      }
+    });
+  }
+
+  // Support standard page loads and Astro View Transitions page changes
+  document.addEventListener('astro:page-load', setupPagination);
+</script>
