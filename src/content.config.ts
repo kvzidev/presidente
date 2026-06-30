@@ -22,4 +22,12 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { vision, stories };
+const legal = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/legal' }),
+  schema: z.object({
+    title: z.string(),
+    lang: z.enum(['es-AR', 'en']),
+  }),
+});
+
+export const collections = { vision, stories, legal };

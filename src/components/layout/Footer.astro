@@ -12,7 +12,10 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <div class="container footer__inner">
-    <p class="footer__disclaimer">{t('footer.disclaimer')}</p>
+    <p class="footer__disclaimer">
+      {t('footer.disclaimer')}
+      <a href={lang === 'es-AR' ? '/legal' : '/en/legal'} class="footer__legal">{t('footer.legal')}</a>
+    </p>
     <div class="footer__right">
       <p class="footer__copy">
         <small>&copy; {year} Kevin Zanzi. {t('footer.rights')}</small>
@@ -75,6 +78,19 @@ const year = new Date().getFullYear();
     display: flex;
     align-items: center;
     gap: var(--space-lg);
+  }
+
+  .footer__legal {
+    color: inherit;
+    text-decoration: none;
+    padding-bottom: 1px;
+    margin-left: var(--space-xs);
+    transition: color var(--transition-fast);
+    font-weight: 500;
+
+    &:hover {
+      color: var(--primary-dark);
+    }
   }
 
   /* Subtle language link — minimal, unobtrusive */

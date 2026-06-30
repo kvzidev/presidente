@@ -76,4 +76,5 @@ export default {
   'footer.rights': 'All rights reserved.',
   'footer.lang': 'Español',
   'footer.lang_label': 'Cambiar a Español',
+  'footer.legal': 'Legal',
 } as const;

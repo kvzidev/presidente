@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const entries = await getCollection('legal');
+const entry = entries.find((e) => e.id.toLowerCase() === 'en');
+
+if (!entry) {
+  throw new Error('Legal entry not found for en');
+}
+
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  lang={lang}
+  altUrl="/legal"
+  title={`${entry.data.title} — ${t('hero.name')} ${t('hero.year')}`}
+  description={`${entry.data.title} for ${t('hero.name')}'s informational site.`}
+>
+  <article class="legal-page">
+    <div class="container container--narrow">
+      <header class="legal-page__header">
+        <h1 class="legal-page__title">{entry.data.title}</h1>
+      </header>
+
+      <div class="legal-page__body">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+
+  .container--narrow {
+    max-width: 48rem;
+  }
+
+  .legal-page__header {
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-md);
+  }
+
+  .legal-page__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--text);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .legal-page__body {
+    font-size: var(--text-base);
+    color: var(--text);
+    line-height: 1.7;
+
+    p {
+      margin-bottom: var(--space-md);
+      color: var(--text-muted);
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      color: var(--text);
+      margin-top: var(--space-xl);
+      margin-bottom: var(--space-sm);
+      font-weight: 700;
+    }
+
+    ul, ol {
+      margin-bottom: var(--space-md);
+      padding-left: var(--space-lg);
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: var(--space-xs);
+    }
+  }
+</style>
