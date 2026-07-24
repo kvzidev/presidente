@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { useTranslations, type Locale } from '../../i18n/ui';
+import candidateImage from '~/assets/people/RonAFondo.webp';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
@@ -55,14 +57,13 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
     </div>
 
     <div class="hero__portrait-wrap">
-      <img
-        src="/candidate.png"
+      <Image
+        src={candidateImage}
         alt={t('hero.portrait_alt')}
+        priority
+        width={480}
+        height={480}
         class="hero__portrait"
-        width="480"
-        height="480"
-        loading="eager"
-        decoding="async"
       />
     </div>
   </div>
