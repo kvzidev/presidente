@@ -100,7 +100,7 @@ const backHref = '/haciendo-historia';
   }
 
   .story-post__title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: var(--text-4xl);
     color: var(--text);
     line-height: 1.15;
     margin: 0;
@@ -122,7 +122,7 @@ const backHref = '/haciendo-historia';
   }
 
   .story-post__body {
-    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    font-size: var(--text-base);
     color: var(--text);
     line-height: 1.8;
     
@@ -132,6 +132,22 @@ const backHref = '/haciendo-historia';
     }
     p:last-child {
       margin-bottom: 0;
+    }
+
+    h2 {
+      font-size: var(--text-3xl);
+    }
+    h3 {
+      font-size: var(--text-2xl);
+    }
+    h4 {
+      font-size: var(--text-xl);
+    }
+    h5 {
+      font-size: var(--text-lg);
+    }
+    h6 {
+      font-size: var(--text-base);
     }
   }
 </style>

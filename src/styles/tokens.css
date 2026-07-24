@@ -10,7 +10,7 @@
   --border:        oklch(90% 0.03 290);
 
   --text:          oklch(20% 0.015 270);
-  --text-muted:    oklch(55% 0.025 280);
+  --text-muted:    oklch(45% 0.025 280);
 
   /* Pastel lilac primary — soft, not political purple */
   --primary:       oklch(88% 0.06 305);
