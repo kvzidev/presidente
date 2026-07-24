@@ -12,13 +12,13 @@ const vision = defineCollection({
 
 const stories = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/stories' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     date: z.string(),
     category: z.string(),
     lang: z.enum(['es-AR', 'en']),
-    image: z.string(),
+    image: z.union([image(), z.string()]).optional(),
     is_active: z.boolean().optional(),
   }),
 });

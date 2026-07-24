@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { useTranslations } from '../../../i18n/ui';
@@ -40,15 +41,17 @@ const backHref = '/en/making-history';
         <h1 class="story-post__title">{entry.data.title}</h1>
       </header>
 
-      <div class="story-post__image-wrap">
-        <img
-          src={entry.data.image}
-          alt={entry.data.title}
-          class="story-post__image"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+      {entry.data.image && (
+        <div class="story-post__image-wrap">
+          <Image
+            src={entry.data.image}
+            alt={entry.data.title}
+            priority
+            inferSize={true}
+            class="story-post__image"
+          />
+        </div>
+      )}
 
       <div class="story-post__body">
         <Content />

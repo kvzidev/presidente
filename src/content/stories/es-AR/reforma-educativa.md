@@ -4,7 +4,7 @@ description: "Reforma Educativa: Resultados del primer año enfocado en moderniz
 date: "2027-12-10"
 category: "Educación"
 lang: "es-AR"
-image: "/images/reforma-educativa.png"
+image: "~/assets/stories/reforma-educativa.webp"
 is_active: true
 ---
 

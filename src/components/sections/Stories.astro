@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { useTranslations, type Locale } from '../../i18n/ui';
 import { featuredStorySlug } from '../../data/blog/blog';
@@ -34,7 +35,7 @@ const remainingStoriesData = remainingStories.map((story) => ({
   description: story.data.description,
   date: story.data.date,
   category: story.data.category,
-  image: story.data.image,
+  image: story.data.image ? (typeof story.data.image === 'object' ? story.data.image.src : story.data.image) : null,
   url: getUrl(story),
 }));
 ---
@@ -48,15 +49,17 @@ const remainingStoriesData = remainingStories.map((story) => ({
 
     {featuredStory && (
       <article class="story-card story-card--featured">
-        <div class="story-card__image-container">
-          <img
-            src={featuredStory.data.image}
-            alt={featuredStory.data.title}
-            class="story-card__image"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
+        {featuredStory.data.image && (
+          <div class="story-card__image-container">
+            <Image
+              src={featuredStory.data.image}
+              alt={featuredStory.data.title}
+              priority
+              inferSize={true}
+              class="story-card__image"
+            />
+          </div>
+        )}
         <div class="story-card__content">
           <span class="story-card__meta">
             {featuredStory.data.date} — {featuredStory.data.category}
@@ -73,15 +76,18 @@ const remainingStoriesData = remainingStories.map((story) => ({
       <div class="stories__grid">
         {initialStories.map((story) => (
           <article class="story-card">
-            <div class="story-card__image-container">
-              <img
-                src={story.data.image}
-                alt={story.data.title}
-                class="story-card__image"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+            {story.data.image && (
+              <div class="story-card__image-container">
+                <Image
+                  src={story.data.image}
+                  alt={story.data.title}
+                  class="story-card__image"
+                  loading="lazy"
+                  decoding="async"
+                  inferSize={true}
+                />
+              </div>
+            )}
             <div class="story-card__content">
               <span class="story-card__meta">
                 {story.data.date} — {story.data.category}
@@ -328,8 +334,16 @@ const remainingStoriesData = remainingStories.map((story) => ({
         const card = template.content.cloneNode(true) as HTMLArticleElement;
 
         card.className = 'story-card';
-        card.querySelector('.story-card__image-container img')!.src = story.image;
-        card.querySelector('.story-card__image-container img')!.alt = story.title;
+        const imgContainer = card.querySelector('.story-card__image-container');
+        if (imgContainer) {
+          if (story.image) {
+            const img = imgContainer.querySelector('img')!;
+            img.src = story.image;
+            img.alt = story.title;
+          } else {
+            imgContainer.remove();
+          }
+        }
         card.querySelector('.story-card__meta')!.textContent = `${story.date} — ${story.category}`;
         card.querySelector('.story-card__title a')!.textContent = story.title;
         card.querySelector('.story-card__title a')!.href = story.url;

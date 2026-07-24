@@ -4,7 +4,7 @@ description: "Education Reform: First-year results focused on modernizing school
 date: "2027-12-10"
 category: "Education"
 lang: "en"
-image: "/images/reforma-educativa.png"
+image: "~/assets/stories/reforma-educativa.webp"
 is_active: true
 ---
 
