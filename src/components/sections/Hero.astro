@@ -362,11 +362,11 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
     font-weight: 500;
     white-space: nowrap;
 
-    &--success {
+    &:is(--success) {
       color: var(--secondary-dark);
     }
 
-    &--error {
+    &:is(--error) {
       color: var(--error);
     }
   }

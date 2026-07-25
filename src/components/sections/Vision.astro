@@ -94,7 +94,7 @@ const chapters = await Promise.all(
     &:nth-of-type(even) { background: var(--surface); }
 
     /* Final chapter: pastel primary tint instead of harsh black */
-    &--final {
+    &:is(--final) {
       background: var(--primary);
       border-bottom: none;
 
