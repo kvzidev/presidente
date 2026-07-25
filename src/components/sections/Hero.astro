@@ -181,13 +181,13 @@ const proposalsHref = lang === 'es-AR' ? '/propuestas' : '/en/proposals';
       color: var(--primary-hover)
     }
 
-    &--primary {
+    &:is(--primary) {
       background: var(--primary-dark);
       color: var(--bg);
       box-shadow: 0 4px 14px oklch(48% 0.12 305 / 0.35);
     }
 
-    &--secondary {
+    &:is(--secondary) {
       background: var(--primary);
       color: var(--primary-dark);
     }
