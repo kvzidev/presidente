@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { useTranslations, type Locale } from '../../i18n/ui';
 import { getTeam } from '../../data/content';
+
+import candidateImg from '~/assets/people/RonAFondo.webp';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
@@ -20,7 +23,7 @@ const teamMembers = getTeam(lang);
         <article class="member-card">
           <div class="member-card__image-container">
             {member.name === t('hero.name') ? (
-              <img src="/candidate.png" alt={member.name} class="member-card__image" loading="lazy" />
+              <Image src={candidateImg} alt={member.name} inferSize={true} priority class="member-card__image" />
             ) : (
               <div class="member-card__placeholder">
                 <span class="placeholder__initials">{member.name.split(' ').map(n => n[0]).join('')}</span>
